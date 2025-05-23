@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 st.title("Movie Trends Dashboard for Young Adults (18–35)")
 
@@ -71,9 +72,6 @@ top_by_count = merged['title'].value_counts().head(10).reset_index()
 top_by_count.columns = ['title', 'count']
 fig_count = px.bar(top_by_count, x='count', y='title', orientation='h', title='Top 10 Most Rated Movies')
 st.plotly_chart(fig_count)
-
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 
 tags_text = " ".join(tags['tag'].dropna())
 wordcloud = WordCloud(width=800, height=400, background_color='white').generate(tags_text)
