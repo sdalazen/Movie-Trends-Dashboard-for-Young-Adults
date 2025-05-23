@@ -71,3 +71,8 @@ top_by_count = merged['title'].value_counts().head(10).reset_index()
 top_by_count.columns = ['title', 'count']
 fig_count = px.bar(top_by_count, x='count', y='title', orientation='h', title='Top 10 Most Rated Movies')
 st.plotly_chart(fig_count)
+
+user_activity = ratings['userId'].value_counts().head(20).reset_index()
+user_activity.columns = ['User ID', 'Ratings Given']
+fig_users = px.bar(user_activity, x='User ID', y='Ratings Given', title='Top 20 Most Active Users')
+st.plotly_chart(fig_users)
