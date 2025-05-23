@@ -72,6 +72,18 @@ top_by_count.columns = ['title', 'count']
 fig_count = px.bar(top_by_count, x='count', y='title', orientation='h', title='Top 10 Most Rated Movies')
 st.plotly_chart(fig_count)
 
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+tags_text = " ".join(tags['tag'].dropna())
+wordcloud = WordCloud(width=800, height=400, background_color='white').generate(tags_text)
+
+st.subheader("Tag Word Cloud")
+fig_wc, ax = plt.subplots()
+ax.imshow(wordcloud, interpolation='bilinear')
+ax.axis('off')
+st.pyplot(fig_wc)
+
 user_activity = ratings['userId'].value_counts().head(20).reset_index()
 user_activity.columns = ['User ID', 'Ratings Given']
 fig_users = px.bar(user_activity, x='User ID', y='Ratings Given', title='Top 20 Most Active Users')
