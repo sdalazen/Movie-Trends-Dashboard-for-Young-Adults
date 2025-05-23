@@ -13,4 +13,20 @@ def load_data():
 
 ratings, movies, tags = load_data()
 
+st.write("Ratings columns:", ratings.columns.tolist())
+st.write("Movies columns:", movies.columns.tolist())
+st.write("Tags columns:", tags.columns.tolist())
 
+merged = ratings.merge(movies, on='movieId').merge(tags, on=['movieId', 'userId'], how='left')
+
+# Top-rated movies
+st.subheader("Top Rated Movies")
+top_movies = (
+    merged.groupby('title')['rating']
+    .mean()
+    .sort_values(ascending=False)
+    .head(10)
+    .reset_index()
+)
+fig_top_movies = px.bar(top_movies, x='rating', y='title', orientation='h', title='Top 10 Movies')
+st.plotly_chart(fig_top_movies)
