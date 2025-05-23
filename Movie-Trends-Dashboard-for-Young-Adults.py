@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
 
 st.title("Movie Trends Dashboard for Young Adults (18–35)")
 
