@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 st.title("Movie Trends Dashboard for Young Adults (18–35)")
 
