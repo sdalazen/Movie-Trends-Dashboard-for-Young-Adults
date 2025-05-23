@@ -12,3 +12,5 @@ def load_data():
     return ratings, movies, tags
 
 ratings, movies, tags = load_data()
+
+
