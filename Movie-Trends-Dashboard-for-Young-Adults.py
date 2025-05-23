@@ -22,7 +22,7 @@ st.write("Tags columns:", tags.columns.tolist())
 
 merged = ratings.merge(movies, on='movieId').merge(tags, on=['movieId', 'userId'], how='left')
 
-st.subheader("Top Rated Movies")
+st.subheader("🎬Top Rated Movies")
 top_movies = (
     merged.groupby('title')['rating']
     .mean()
@@ -42,13 +42,13 @@ top_genres.columns = ['Genre', 'Count']
 fig_genres = px.pie(top_genres, values='Count', names='Genre', title='Genre Distribution')
 st.plotly_chart(fig_genres)
 
-st.subheader("Popular Tags")
+st.subheader("🏷️Popular Tags")
 tag_counts = tags['tag'].value_counts().head(20).reset_index()
 tag_counts.columns = ['Tag', 'Count']
 fig_tags = px.bar(tag_counts, x='Tag', y='Count', title='Top 20 Tags')
 st.plotly_chart(fig_tags)
 
-st.subheader("Why is this Data Suitable for Machine Learning?")
+st.subheader("🤖Why is this Data Suitable for Machine Learning?")
 st.markdown("""
 - Large volume of user interaction data (ratings, tags).
 - Temporal patterns (timestamps).
@@ -56,7 +56,7 @@ st.markdown("""
 - Opportunity to predict user preferences, recommend movies, and identify genre trends.
 """)
 
-st.sidebar.title("Design for 18–35 Age Group")
+st.sidebar.title("🎯Design for 18–35 Age Group")
 st.sidebar.markdown("""
 - Minimalist layout with emojis for engagement.
 - Interactive visuals (bar, pie charts).
@@ -64,11 +64,13 @@ st.sidebar.markdown("""
 - Trending content focus aligns with younger user interests.
 """)
 
+st.sidebar.title("📊Ratings Over Time")
 ratings['timestamp'] = pd.to_datetime(ratings['timestamp'], unit='s')
 ratings_by_month = ratings.set_index('timestamp').resample('M')['rating'].mean().reset_index()
 fig_time = px.line(ratings_by_month, x='timestamp', y='rating', title='Average Rating Over Time')
 st.plotly_chart(fig_time)
 
+st.sidebar.title("🎬Top Movies by Number of Ratings")
 top_by_count = merged['title'].value_counts().head(10).reset_index()
 top_by_count.columns = ['title', 'count']
 fig_count = px.bar(top_by_count, x='count', y='title', orientation='h', title='Top 10 Most Rated Movies')
@@ -77,12 +79,13 @@ st.plotly_chart(fig_count)
 tags_text = " ".join(tags['tag'].dropna())
 wordcloud = WordCloud(width=800, height=400, background_color='white').generate(tags_text)
 
-st.subheader("Tag Word Cloud")
+st.subheader("🏷️Tag Word Cloud")
 fig_wc, ax = plt.subplots()
 ax.imshow(wordcloud, interpolation='bilinear')
 ax.axis('off')
 st.pyplot(fig_wc)
 
+st.subheader("📣User Activity Analysis")
 user_activity = ratings['userId'].value_counts().head(20).reset_index()
 user_activity.columns = ['User ID', 'Ratings Given']
 fig_users = px.bar(user_activity, x='User ID', y='Ratings Given', title='Top 20 Most Active Users')
