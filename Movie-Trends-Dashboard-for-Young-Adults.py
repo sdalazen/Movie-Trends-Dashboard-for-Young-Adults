@@ -61,3 +61,13 @@ st.sidebar.markdown("""
 - Quick insights without overwhelming detail.
 - Trending content focus aligns with younger user interests.
 """)
+
+ratings['timestamp'] = pd.to_datetime(ratings['timestamp'], unit='s')
+ratings_by_month = ratings.set_index('timestamp').resample('M')['rating'].mean().reset_index()
+fig_time = px.line(ratings_by_month, x='timestamp', y='rating', title='Average Rating Over Time')
+st.plotly_chart(fig_time)
+
+top_by_count = merged['title'].value_counts().head(10).reset_index()
+top_by_count.columns = ['title', 'count']
+fig_count = px.bar(top_by_count, x='count', y='title', orientation='h', title='Top 10 Most Rated Movies')
+st.plotly_chart(fig_count)
